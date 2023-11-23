@@ -36,11 +36,13 @@ def main():
             case "5":
                 pass
             case "6":
+                pass
+            case "0":
                 return 1
             case "-1":
                 pass
             case _:
-                choice = "0"
+                print("Option invalide")
 
 
 if __name__ == '__main__':
