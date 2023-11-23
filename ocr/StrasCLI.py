@@ -4,7 +4,7 @@ import cv2
 from PIL import Image
 import pytesseract
 import utils.Messages as Messages
-import utils.Prompt as Prompt
+import utils.Prompt as Q
 import utils.FilesHelper as FH
 import utils.ImageManipulation as IM
 import utils.Settings as Settings
@@ -18,29 +18,26 @@ def main():
     config = Settings.get_config()
     folder = ""
     while True:
-        Messages.Menu()
-        choice = input("Quel option souhaitez-vous choisir?  ")
-        match choice:
-            case "1":
-                pages = prompt(Prompt.pages)
-                folder = FH.download(config["source"], pages["start"], pages["end"])
-            case "2":
-                folder = prompt(Prompt.choose_folder)
+        choice = prompt(Q.menu)
+        match choice[0]:
+            case 1:
+                pages = prompt(Q.pages)
+                FH.download(config["source"], pages["start"], pages["end"])
+            case 2:
+                folder = prompt(Q.choose_folder)
                 pass
-            case "3":
-                folder = prompt(Prompt.choose_folder)
+            case 3:
+                folder = prompt(Q.choose_folder)
                 pass
-            case "4":
-                folder = prompt(Prompt.choose_folder)
+            case 4:
+                folder = prompt(Q.choose_folder)
                 IM.segmentation(folder)
-            case "5":
+            case 5:
                 pass
-            case "6":
+            case 6:
                 pass
-            case "0":
+            case 0:
                 return 1
-            case "-1":
-                pass
             case _:
                 print("Option invalide")
 

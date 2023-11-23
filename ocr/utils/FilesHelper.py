@@ -5,7 +5,7 @@ import os
 
 def download(config, p1, p2):
     folder = str(int(time.time()))
-    os.mkdir(os.path.join(os.getcwd(), "input", folder))
+    os.mkdir(os.path.join(os.getcwd(), "output", folder))
     print("⚪ Début des téléchargements")
     for p in range(int(p1), int(p2) + 1):
         dezoomify_path = os.path.join(os.getcwd(), "utils", "dezoomify-rs.exe")
@@ -18,5 +18,4 @@ def download(config, p1, p2):
         process = subprocess.run(command, capture_output=True, text=False)
         print(f"▪️ ✅ {page}.jpg créé avec succès") if process.returncode == 0 else print(f"▪️ ❌ ERREUR: {process.stderr}")
     print("⚫ Fin des téléchargements")
-    print(f"Le dossier de sorti est /input/{folder}")
-    return folder
+    print(f"Le dossier de sorti est /output/{folder}")

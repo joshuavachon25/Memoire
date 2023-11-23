@@ -1,5 +1,24 @@
 from InquirerPy.validator import EmptyInputValidator, PathValidator
-import os
+from InquirerPy.base.control import Choice
+from InquirerPy.separator import Separator
+
+menu = [
+        {
+            "type": "list",
+            "message": "Sélection d'une étape",
+            "choices": [
+                Choice(1, name="Télécharger une tuile"),
+                Choice(2, name="Tester des paramètres"),
+                Separator(),
+                Choice(3, name="Améliorer les images"),
+                Choice(4, name="Segmenter les images"),
+                Choice(5, name="Océriser"),
+                Choice(6, name="Nettoyer les données"),
+                Choice(0, name="Quitter")
+            ],
+            "default": None,
+        },
+]
 
 pages = [
     {
