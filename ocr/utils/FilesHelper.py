@@ -12,7 +12,7 @@ def download(config, p1, p2):
         page = str(p).rjust(4, "0")
 
         url = config["Template"].replace("||Page||", page)
-        output_path = os.path.join(os.getcwd(), "input", folder, page + ".jpg")
+        output_path = os.path.join(os.getcwd(), "output", folder, page + ".jpg")
         command = [dezoomify_path, "-l", url, output_path]
 
         process = subprocess.run(command, capture_output=True, text=False)

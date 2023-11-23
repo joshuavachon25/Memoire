@@ -4,6 +4,7 @@ import cv2
 from PIL import Image
 import pytesseract
 import utils.Messages as Messages
+import utils.Cutter as Cutter
 import utils.Prompt as Q
 import utils.FilesHelper as FH
 import utils.ImageManipulation as IM
@@ -18,23 +19,33 @@ def main():
     config = Settings.get_config()
     folder = ""
     while True:
+        os.system('cls')
         choice = prompt(Q.menu)
         match choice[0]:
             case 1:
                 pages = prompt(Q.pages)
-                FH.download(config["source"], pages["start"], pages["end"])
+                FH.download(config["archives"], pages["start"], pages["end"])
             case 2:
                 folder = prompt(Q.choose_folder)
                 pass
             case 3:
                 folder = prompt(Q.choose_folder)
-                pass
+                for filename in os.listdir(folder["src"]):
+                    if filename.endswith((".png", ".jpg", ".jpeg")):
+                        image_path = os.path.join(folder["src"], filename)
+                        cropped_images = Cutter.draw_polygon_and_crop(image_path)
+                        for idx, img in enumerate(cropped_images):
+                            #$folder_path = folder["src"].replace("\\", "/")
+                            os.mkdir(os.path.join(os.getcwd(), "output", "cropped_" + folder["src"]))
+                            img.save(f"output/cropped_{folder['src']}/{filename.split('.')[0]}_{idx}.jpg")
             case 4:
                 folder = prompt(Q.choose_folder)
                 IM.segmentation(folder)
             case 5:
                 pass
             case 6:
+                pass
+            case 7:
                 pass
             case 0:
                 return 1
