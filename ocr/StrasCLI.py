@@ -35,14 +35,15 @@ def main():
                         image_path = os.path.join(folder["src"], filename)
                         cropped_images = Cutter.draw_polygon_and_crop(image_path)
                         for idx, img in enumerate(cropped_images):
-                            #$folder_path = folder["src"].replace("\\", "/")
-                            os.mkdir(os.path.join(os.getcwd(), "output", "cropped_" + folder["src"]))
-                            img.save(f"output/cropped_{folder['src']}/{filename.split('.')[0]}_{idx}.jpg")
+                            if not os.path.exists(os.path.join(os.getcwd(), folder["src"], "cropped")):
+                                os.mkdir(os.path.join(os.getcwd(), folder["src"], "cropped"))
+                            img.save(f"{folder['src']}/cropped/{filename.split('.')[0]}_{idx}.jpg")
             case 4:
                 folder = prompt(Q.choose_folder)
-                IM.segmentation(folder)
+                IM.enhance(folder, config)
             case 5:
-                pass
+                folder = prompt(Q.choose_folder)
+                IM.segment(folder, config)
             case 6:
                 pass
             case 7:
