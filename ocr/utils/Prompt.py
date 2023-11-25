@@ -21,7 +21,7 @@ menu = [
         },
 ]
 
-pages = [
+dezoomify = [
     {
         "type": "number",
         "message": "Page de départ: ",
@@ -38,6 +38,11 @@ pages = [
         "validate": EmptyInputValidator(),
         "name": "end"
     },
+    {
+        "type": "input",
+        "message": "Nom du dossier de sortie: ",
+        "name": "folder_name"
+    },
 ]
 
 choose_folder = [
@@ -47,5 +52,60 @@ choose_folder = [
         "validate": PathValidator(is_dir=True, message="Pas un dossier"),
         "name": "src",
         "only_directories": True,
+    },
+]
+
+sandbox = [
+    {
+         "type": "list",
+            "message": "Quel ensemble de paramères voulez-vous tester?",
+            "choices": [
+                Choice(1, name="Threshold"),
+                Choice(2, name="Kernel"),
+                Choice(3, name="Iterations"),
+                Choice(4, name="Blur"),
+                Choice(-1, name="Sortir"),
+            ],
+            "default": None,
+    },
+]
+
+pretraitement = [
+    {
+         "type": "list",
+            "message": "Quel ensemble de paramères voulez-vous tester?",
+            "choices": [
+                Choice(1, name="Découpage"),
+                Choice(2, name="Enlever les bordures"),
+                Choice(3, name="Binarisation"),
+                Choice(4, name="Créer des box"),
+                Choice(4, name="Extraire les box"),
+                Choice(-1, name="Sortir"),
+            ],
+            "default": None,
+    },
+]
+
+ocr = [
+    {
+         "type": "list",
+            "message": "Que souhaitez-vous faire?",
+            "choices": [
+                Choice(1, name="Océriser"),
+                Choice(-1, name="Sortir"),
+            ],
+            "default": None,
+    },
+]
+
+encore = [
+    {
+         "type": "list",
+            "message": "Voulez-vous utiliser encore Dezoomify?",
+            "choices": [
+                Choice(1, name="Oui"),
+                Choice(-1, name="Non, retour au menu"),
+            ],
+            "default": None,
     },
 ]

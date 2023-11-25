@@ -3,7 +3,7 @@ import os
 import cv2
 from PIL import Image
 import pytesseract
-import utils.Messages as Messages
+import utils.Dezoomify as Dezoomify
 import utils.Cutter as Cutter
 import utils.Prompt as Q
 import utils.FilesHelper as FH
@@ -12,7 +12,7 @@ import utils.Settings as Settings
 import utils.OCR as OCR
 import utils.DataCleaning as DC
 import utils.GeoTreatment as GT
-#https://github.com/UB-Mannheim/tesseract/wiki
+# https://github.com/UB-Mannheim/tesseract/wiki
 
 
 def main():
@@ -23,8 +23,7 @@ def main():
         choice = prompt(Q.menu)
         match choice[0]:
             case 1:
-                pages = prompt(Q.pages)
-                FH.download(config["archives"], pages["start"], pages["end"])
+                Dezoomify
             case 2:
                 folder = prompt(Q.choose_folder)
                 pass
