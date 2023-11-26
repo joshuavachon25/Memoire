@@ -5,45 +5,49 @@ import subprocess
 import time
 import os
 
+# Module-level variables to maintain state
+config = get_config()
+url = config["archives"]["Template"]
+choice = 0
+params = []
+dezoomify_executable = os.path.join(os.getcwd(), "utils", "dezoomify-rs.exe")
+p1 = 0
+p2 = 0
+folder = prompt(Q.choose_folder)
+output_path = str(int(time.time()))
 
-class Dezoomify:
-    def __init__(self):
-        self.config = get_config()
-        self.url = self.config["archives"]["Template"]
-        self.choice = 0
-        self.params = []
-        self.dezoomify = os.path.join(os.getcwd(), "utils", "dezoomify-rs.exe")
-        self.p1 = 0
-        self.p2 = 0
-        self.folder = prompt(Q.choose_folder)
-        self.output_path = str(int(time.time()))
-        self.menu()
 
-    def menu(self):
-        while int(self.choice[0]) != -1:
-            self.params = prompt(Q.dezoomify)
-            self.p1 = int(self.params["start"])
-            self.p2 = int(self.params["end"])
-            if self.params["folder_name"] != "":
-                self.output_path = self.params["folder_name"]
-            self.output_path = os.path.join(os.getcwd(), "output", self.output_path)
-            self.start()
-            self.choice = prompt(Q.encore)
+def menu():
+    global choice, params, p1, p2, output_path
+    while int(choice[0]) != -1:
+        params = prompt(Q.dezoomify)
+        p1 = int(params["start"])
+        p2 = int(params["end"])
+        if params["folder_name"] != "":
+            output_path = params["folder_name"]
+        output_path = os.path.join(os.getcwd(), "output", output_path)
+        start()
 
-    def start(self):
-        os.mkdir(os.path.join(os.getcwd(), "output", self.output_path))
-        print("⚪ Début des téléchargements")
-        for page in range(self.p1, self.p2 + 1):
-            self.download(page)
-        print("⚫ Fin des téléchargements")
 
-    def download(self, page):
-        page = str(page).rjust(4, "0")
+def start():
+    global output_path
+    os.mkdir(os.path.join(os.getcwd(), "output", output_path))
+    print("⚪ Début des téléchargements")
+    for page in range(p1, p2 + 1):
+        download(page)
+    print("⚫ Fin des téléchargements")
 
-        url = self.url.replace("||Page||", page)
-        output_path = os.path.join(self.output_path, page + ".jpg")
-        command = [self.dezoomify, "-l", url, output_path]
 
-        process = subprocess.run(command, capture_output=True, text=False)
-        print(f"▪️ ✅ {page}.jpg créé avec succès") if process.returncode == 0 else print(
-            f"▪️ ❌ ERREUR: {process.stderr}")
+def download(page):
+    global url, output_path, dezoomify_executable
+    page_str = str(page).rjust(4, "0")
+
+    page_url = url.replace("||Page||", page_str)
+    page_output_path = os.path.join(output_path, page_str + ".jpg")
+    command = [dezoomify_executable, "-l", page_url, page_output_path]
+
+    process = subprocess.run(command, capture_output=True, text=False)
+    if process.returncode == 0:
+        print(f"▪️ ✅ {page_str}.jpg créé avec succès")
+    else:
+        print(f"▪️ ❌ ERREUR: {process.stderr}")

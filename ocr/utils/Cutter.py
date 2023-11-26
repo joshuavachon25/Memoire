@@ -1,7 +1,22 @@
+from InquirerPy import prompt
+import utils.Prompt as Q
+from Settings import get_config
 import cv2
 import numpy as np
 from PIL import Image
 import os
+
+
+def menu():
+    folder = prompt(Q.choose_folder)
+    for filename in os.listdir(folder["src"]):
+        if filename.endswith((".png", ".jpg", ".jpeg")):
+            image_path = os.path.join(folder["src"], filename)
+            cropped_images = draw_polygon_and_crop(image_path)
+            for idx, img in enumerate(cropped_images):
+                if not os.path.exists(os.path.join(os.getcwd(), folder["src"], "cropped")):
+                    os.mkdir(os.path.join(os.getcwd(), folder["src"], "cropped"))
+                img.save(f"{folder['src']}/cropped/{filename.split('.')[0]}_{idx}.jpg")
 
 
 def draw_polygon_and_crop(image_path):
