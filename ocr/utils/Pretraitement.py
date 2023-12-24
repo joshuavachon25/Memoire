@@ -1,6 +1,6 @@
 from InquirerPy import prompt
 import utils.Prompt as Q
-from Settings import get_config
+from utils.Settings import get_config
 
 config = get_config()
 choice = 0

@@ -1,6 +1,6 @@
 from InquirerPy import prompt
 import utils.Prompt as Q
-from Settings import get_config
+from utils.Settings import get_config
 import cv2
 import numpy as np
 from PIL import Image

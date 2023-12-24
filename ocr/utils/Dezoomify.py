@@ -1,6 +1,6 @@
 from InquirerPy import prompt
 import utils.Prompt as Q
-from Settings import get_config
+from utils.Settings import get_config
 import subprocess
 import time
 import os
@@ -13,20 +13,19 @@ params = []
 dezoomify_executable = os.path.join(os.getcwd(), "utils", "dezoomify-rs.exe")
 p1 = 0
 p2 = 0
-folder = prompt(Q.choose_folder)
-output_path = str(int(time.time()))
+folder = ""
+output_path = ""
 
 
 def menu():
-    global choice, params, p1, p2, output_path
-    while int(choice[0]) != -1:
-        params = prompt(Q.dezoomify)
-        p1 = int(params["start"])
-        p2 = int(params["end"])
-        if params["folder_name"] != "":
-            output_path = params["folder_name"]
-        output_path = os.path.join(os.getcwd(), "output", output_path)
-        start()
+    global choice, folder, params, p1, p2, output_path
+    params = prompt(Q.dezoomify)
+    p1 = int(params["start"])
+    p2 = int(params["end"])
+    if params["folder_name"] != "":
+        output_path = params["folder_name"]
+    output_path = os.path.join(os.getcwd(), "output", output_path)
+    start()
 
 
 def start():
